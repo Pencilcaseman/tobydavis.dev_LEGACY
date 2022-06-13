@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Toby Davis | Home</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Toby Davis - Personal Website">
+    <meta name="keywords"
+          content="software, multipurpose, blog, portfolio, html5, css3, javascript, cpp, python, rust, high performance computing">
+    <meta name="author" content="Toby Davis">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#6366f1">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#080032">
+    <meta name="msapplication-config" content="assets/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="assets/vendor/boxicons/css/boxicons.min.css"/>
+    <link rel="stylesheet" media="screen" href="assets/vendor/lightgallery/css/lightgallery-bundle.min.css"/>
+    <link rel="stylesheet" media="screen" href="assets/vendor/swiper/swiper-bundle.min.css"/>
+    <link rel="stylesheet" media="screen" href="css/custom.css"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="assets/css/theme.min.css">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <!-- Page loading styles -->
+    <style>
+        .page-loading {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-transition: all .4s .2s ease-in-out;
+            transition: all .4s .2s ease-in-out;
+            background-color: #fff;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 9999;
+        }
+
+        .dark-mode .page-loading {
+            background-color: #0b0f19;
+        }
+
+        .page-loading.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .page-loading-inner {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            -webkit-transition: opacity .2s ease-in-out;
+            transition: opacity .2s ease-in-out;
+            opacity: 0;
+        }
+
+        .page-loading.active > .page-loading-inner {
+            opacity: 1;
+        }
+
+        .page-loading-inner > span {
+            display: block;
+            font-size: 1rem;
+            font-weight: normal;
+            color: #9397ad;
+        }
+
+        .dark-mode .page-loading-inner > span {
+            color: #fff;
+            opacity: .6;
+        }
+
+        .page-spinner {
+            display: inline-block;
+            width: 2.75rem;
+            height: 2.75rem;
+            margin-bottom: .75rem;
+            vertical-align: text-bottom;
+            border: .15em solid #b4b7c9;
+            border-right-color: transparent;
+            border-radius: 50%;
+            -webkit-animation: spinner .75s linear infinite;
+            animation: spinner .75s linear infinite;
+        }
+
+        .dark-mode .page-spinner {
+            border-color: rgba(255, 255, 255, .4);
+            border-right-color: transparent;
+        }
+
+        @-webkit-keyframes spinner {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinner {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+        let mode = window.localStorage.getItem('mode'),
+            root = document.getElementsByTagName('html')[0];
+        if (mode !== null && mode === 'dark') {
+            root.classList.add('dark-mode');
+        } else {
+            root.classList.remove('dark-mode');
+        }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+        (function () {
+            window.onload = function () {
+                const preloader = document.querySelector('.page-loading');
+                preloader.classList.remove('active');
+                setTimeout(function () {
+                    preloader.remove();
+                }, 1000);
+            };
+        })();
+    </script>
+</head>
+
+
+<!-- Body -->
+<body>
+
+<!-- Page loading spinner -->
+<div class="page-loading active">
+    <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+    </div>
+</div>
+
+
+<!-- Page wrapper for sticky footer -->
+<!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+<main class="page-wrapper">
+
+    <!-- BG light version -->
+    <div class="d-dark-mode-none position-absolute top-0 start-0 w-100 h-100 bg-repeat-0 bg-position-center bg-size-cover"
+         style="background-image: url(assets/img/404/light/bg.jpg);"></div>
+
+    <!-- BG dark version -->
+    <div class="d-none d-dark-mode-block position-absolute top-0 start-0 w-100 h-100 bg-repeat-0 bg-position-center bg-size-cover"
+         style="background-image: url(assets/img/404/dark/bg.jpg);"></div>
+
+
+    <!-- Navbar -->
+    <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+    <header class="header navbar navbar-expand-lg bg-light navbar-sticky">
+        <div class="container px-3">
+            <a href="index.html" class="navbar-brand pe-3">
+                <img src="assets/img/logoHD-transparent.png" width="47" alt="Toby Davis">
+                Toby Davis
+            </a>
+            <div id="navbarNav" class="offcanvas offcanvas-end">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"
+                               aria-current="page">Projects</a>
+                            <div class="dropdown-menu p-0">
+                                <div class="d-lg-flex">
+                                    <div class="mega-dropdown-column pt-lg-3 pb-lg-4">
+                                        <ul class="list-unstyled mb-0">
+                                            <li><a href="index.html" class="dropdown-item">This Website!</a></li>
+                                            <li><a href="projects/librapid/outline.html"
+                                                   class="dropdown-item">LibRapid</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Articles</a>
+                            <div class="dropdown-menu">
+                                <div class="d-lg-flex pt-lg-3">
+                                    <div class="mega-dropdown-column">
+                                        <h6 class="px-3 mb-2">Graphics</h6>
+                                        <ul class="list-unstyled mb-3">
+                                            <li><a href="article-graphics-raytracing-1.html" class="dropdown-item py-1">Simple
+                                                Ray Tracing</a></li>
+                                        </ul>
+                                        <h6 class="px-3 mb-2">Optimization</h6>
+                                        <ul class="list-unstyled mb-3">
+                                            <li><a href="article-optimization-simd.html" class="dropdown-item py-1">SIMD
+                                                Vectorization</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Random</a>
+                            <div class="dropdown-menu">
+                                <div class="d-lg-flex pt-lg-3">
+                                    <div class="mega-dropdown-column">
+                                        <ul class="list-unstyled mb-3">
+                                            <li><a href="constants.html" class="dropdown-item py-1">Constants</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-current="page">About</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="about/contact.html" class="dropdown-item">Contact Me</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="components/typography.html" class="nav-link">UI Kit</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+                <input type="checkbox" class="form-check-input" id="theme-mode">
+                <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+                <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+            </div>
+            <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="https://github.com/Pencilcaseman"
+               class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex" target="_blank" rel="noopener">
+                <i class="bx bxl-github fs-4 lh-1 me-1"></i>
+                GitHub
+            </a>
+        </div>
+    </header>
+
+
+    <!-- Page content -->
+    <section class="container d-flex flex-column h-100 align-items-center position-relative zindex-5 pt-5">
+        <div class="text-center pt-5 pb-3 mt-auto">
+
+            <!-- Parallax gfx (Light version) -->
+            <div class="parallax mx-auto d-dark-mode-none" style="max-width: 574px;">
+                <div class="parallax-layer" data-depth="-0.15">
+                    <img src="assets/img/404/light/layer01.png" alt="Layer">
+                </div>
+                <div class="parallax-layer" data-depth="0.12">
+                    <img src="assets/img/404/light/layer02.png" alt="Layer">
+                </div>
+                <div class="parallax-layer zindex-5" data-depth="-0.12">
+                    <img src="assets/img/404/light/layer03.png" alt="Layer">
+                </div>
+            </div>
+
+            <!-- Parallax gfx (Dark version) -->
+            <div class="parallax mx-auto d-none d-dark-mode-block" style="max-width: 574px;">
+                <div class="parallax-layer" data-depth="-0.15">
+                    <img src="assets/img/404/dark/layer01.png" alt="Layer">
+                </div>
+                <div class="parallax-layer" data-depth="0.12">
+                    <img src="assets/img/404/dark/layer02.png" alt="Layer">
+                </div>
+                <div class="parallax-layer zindex-5" data-depth="-0.12">
+                    <img src="assets/img/404/dark/layer03.png" alt="Layer">
+                </div>
+            </div>
+
+            <h1 class="visually-hidden">404</h1>
+            <h2 class="display-5">Oh no!</h2>
+            <p class="fs-xl pb-3 pb-md-0 mb-md-5">The page you are looking for is not available.</p>
+            <a href="index.html" class="btn btn-lg btn-primary shadow-primary w-sm-auto w-100">
+                <i class="bx bx-home-alt me-2 ms-n1 lead"></i>
+                Return Home
+            </a>
+        </div>
+
+        <div class="text-center py-lg-5 py-4 mt-auto">
+            <p class="nav d-block fs-xs text-center text-md-start pb-2 pb-lg-0 mb-0">
+                <span class="text-light opacity-50">Made by </span>
+                <a class="nav-link d-inline-block p-0" href="index.html">Toby Davis</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<!-- Vendor Scripts -->
+<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="assets/vendor/parallax-js/dist/parallax.min.js"></script>
+
+<!-- Main Theme Script -->
+<script src="assets/js/theme.min.js"></script>
+</body>
+</html>
