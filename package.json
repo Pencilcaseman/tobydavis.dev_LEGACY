@@ -36,6 +36,7 @@
     "mathjax-full": "^3.2.2",
     "nouislider": "^15.6.0",
     "parallax-js": "^3.1.0",
+    "prism": "^4.1.2",
     "prismjs": "^1.28.0",
     "rellax": "^1.12.1",
     "shufflejs": "^6.0.0",

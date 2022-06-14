@@ -1,4 +1,4 @@
-![commit](https://badgen.net/github/last-commit/sachinchoolur/lightGallery/next)
+![commit](https://badgen.net/github/last-commit/sachinchoolur/lightGallery/master)
 ![npm](https://img.shields.io/npm/v/lightgallery.svg?color=red)
 ![npm-tag](https://badgen.net/github/tag/sachinchoolur/lightgallery)
 ![size](https://badgen.net/bundlephobia/minzip/lightgallery?color=cyan)
@@ -25,10 +25,10 @@ Available for React.js, Angular, Vue.js, and typescript.
 -   YouTube Vimeo Wistia and html5 videos Support.
 -   20+ Hardware-Accelerated CSS3 transitions.
 -   Dynamic mode.
--   Inline gallery
+-   Inline gallery.
 -   Full screen support.
 -   Zoom in/out, Pinch to zoom.
--   Swipe/Drag up/down support to close gallery
+-   Swipe/Drag up/down support to close gallery.
 -   Browser history API(deep linking).
 -   Responsive images.
 -   HTML iframe support.
@@ -54,7 +54,7 @@ Available for React.js, Angular, Vue.js, and typescript.
 ## Installation
 
 lightGallery is available on NPM, Yarn, Bower, CDNs, and GitHub. You can use any
-of the following method to download lightGallery
+of the following method to download lightGallery.
 
 -   [NPM](https://www.npmjs.com/) - NPM is a package manager for the JavaScript
     programming language. You can install `lightgallery` using the following

@@ -28,10 +28,13 @@
     <link rel="stylesheet" media="screen" href="../../assets/vendor/boxicons/css/boxicons.min.css"/>
     <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css"/>
     <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css"/>
-    <link rel="stylesheet" media="screen" href="css/custom.css"/>
 
     <!-- Main Theme Styles + Bootstrap -->
     <link rel="stylesheet" media="screen" href="../../assets/css/theme.min.css">
+
+    <link rel="stylesheet" media="screen" href="css/custom.css"/>
+    <link href="../../assets/vendor/prismjs/themes/prism-okaidia.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css">
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script type="text/javascript" id="MathJax-script" async
@@ -224,7 +227,8 @@
                                 <div class="d-lg-flex pt-lg-3">
                                     <div class="mega-dropdown-column">
                                         <ul class="list-unstyled mb-3">
-                                            <li><a href="../../constants.html" class="dropdown-item py-1">Constants</a></li>
+                                            <li><a href="../../constants.html" class="dropdown-item py-1">Constants</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -333,6 +337,9 @@
                     orci, dictum fusce. Urna, sed urna fringilla faucibus euismod aliquet nec. Quis libero, fermentum
                     amet eu, condimentum auctor. Sit vel ipsum sem tempus gravida et. Scelerisque blandit orci, est
                     quis. Nisi, tellus amet est nascetur habitant faucibus ornare et vivamus.</p>
+
+                <pre class="cms-code"><code class="language-css">print("Hello, World");</code></pre>
+                <pre class="cms-code"><code class="language-css">print("Hello, Worl2");</code></pre>
 
                 <!-- Video -->
                 <div class="gallery mb-4 pb-2" data-video="true">
@@ -523,7 +530,8 @@
                         <span class="position-absolute top-0 start-0 w-1 h-100 bg-primary"></span>
                         <div class="d-flex align-items-center justify-content-between ps-3 pb-2 mb-1">
                             <div class="d-flex align-items-center me-3">
-                                <img src="../../assets/img/avatar/05.jpg" class="rounded-circle" width="48" alt="Avatar">
+                                <img src="../../assets/img/avatar/05.jpg" class="rounded-circle" width="48"
+                                     alt="Avatar">
                                 <div class="ps-3">
                                     <h6 class="fw-semibold mb-0">Albert Flores</h6>
                                     <span class="fs-sm text-muted">16 hours ago</span>
@@ -706,7 +714,8 @@
                         </div>
                         <div class="card-footer py-4">
                             <a href="#" class="d-flex align-items-center fw-bold text-dark text-decoration-none">
-                                <img src="../../assets/img/avatar/01.jpg" class="rounded-circle me-3" width="48" alt="Avatar">
+                                <img src="../../assets/img/avatar/01.jpg" class="rounded-circle me-3" width="48"
+                                     alt="Avatar">
                                 Jerome Bell
                             </a>
                         </div>
@@ -737,7 +746,8 @@
                         </div>
                         <div class="card-footer py-4">
                             <a href="#" class="d-flex align-items-center fw-bold text-dark text-decoration-none">
-                                <img src="../../assets/img/avatar/05.jpg" class="rounded-circle me-3" width="48" alt="Avatar">
+                                <img src="../../assets/img/avatar/05.jpg" class="rounded-circle me-3" width="48"
+                                     alt="Avatar">
                                 Albert Flores
                             </a>
                         </div>
@@ -768,7 +778,8 @@
                         </div>
                         <div class="card-footer py-4">
                             <a href="#" class="d-flex align-items-center fw-bold text-dark text-decoration-none">
-                                <img src="../../assets/img/avatar/02.jpg" class="rounded-circle me-3" width="48" alt="Avatar">
+                                <img src="../../assets/img/avatar/02.jpg" class="rounded-circle me-3" width="48"
+                                     alt="Avatar">
                                 Ralph Edwards
                             </a>
                         </div>
@@ -821,11 +832,14 @@
                         </h6>
                         <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
                             <ul class="nav flex-column mb-2 mb-lg-0">
-                                <li class="nav-item"><a href="https://github.com/Pencilcaseman" target="_blank" rel="noopener noreferrer"
+                                <li class="nav-item"><a href="https://github.com/Pencilcaseman" target="_blank"
+                                                        rel="noopener noreferrer"
                                                         class="nav-link d-inline-block px-0 pt-1 pb-2">GitHub</a></li>
-                                <li class="nav-item"><a href="https://www.linkedin.com/in/toby-davis-codes/" target="_blank" rel="noopener noreferrer"
+                                <li class="nav-item"><a href="https://www.linkedin.com/in/toby-davis-codes/"
+                                                        target="_blank" rel="noopener noreferrer"
                                                         class="nav-link d-inline-block px-0 pt-1 pb-2">LinkedIn</a></li>
-                                <li class="nav-item"><a href="https://dev.to/pencilcaseman" target="_blank" rel="noopener noreferrer"
+                                <li class="nav-item"><a href="https://dev.to/pencilcaseman" target="_blank"
+                                                        rel="noopener noreferrer"
                                                         class="nav-link d-inline-block px-0 pt-1 pb-2">Dev.to</a></li>
                             </ul>
                         </div>
@@ -861,6 +875,11 @@
 <script src="../../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
 <script src="../../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
 <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js" data-manual></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-markup.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
 
 <!-- Main Theme Script -->
 <script src="../../assets/js/theme.min.js"></script>

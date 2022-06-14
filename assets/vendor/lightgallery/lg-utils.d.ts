@@ -197,6 +197,7 @@ declare const utils: {
     getResponsiveSrc(srcItms: string[]): string;
     isImageLoaded(img: HTMLImageElement): boolean;
     getVideoPosterMarkup(_poster: string, dummyImg: string, videoContStyle: string, playVideoString: string, _isVideo?: VideoInfo | undefined): string;
+    getFocusableElements(container: HTMLElement): NodeListOf<Element>;
     /**
      * @desc Create dynamic elements array from gallery items when dynamic option is false
      * It helps to avoid frequent DOM interaction

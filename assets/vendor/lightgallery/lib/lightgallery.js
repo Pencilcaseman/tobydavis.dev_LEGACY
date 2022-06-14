@@ -33,6 +33,7 @@ var LightGallery = /** @class */ (function () {
         this.currentItemsInDom = [];
         // Scroll top value before lightGallery is opened
         this.prevScrollTop = 0;
+        this.bodyPaddingRight = 0;
         this.isDummyImageRemoved = false;
         this.dragOrSwipeEnabled = false;
         this.mediaContainerPosition = {
@@ -380,6 +381,27 @@ var LightGallery = /** @class */ (function () {
             return this.settings.dynamicEl || [];
         }
     };
+    LightGallery.prototype.shouldHideScrollbar = function () {
+        return (this.settings.hideScrollbar &&
+            document.body === this.settings.container);
+    };
+    LightGallery.prototype.hideScrollbar = function () {
+        if (!this.shouldHideScrollbar()) {
+            return;
+        }
+        this.bodyPaddingRight = parseFloat(lgQuery_1.$LG('body').style().paddingRight);
+        var bodyRect = document.documentElement.getBoundingClientRect();
+        var scrollbarWidth = window.innerWidth - bodyRect.width;
+        lgQuery_1.$LG(document.body).css('padding-right', scrollbarWidth + this.bodyPaddingRight + 'px');
+        lgQuery_1.$LG(document.body).addClass('lg-overlay-open');
+    };
+    LightGallery.prototype.resetScrollBar = function () {
+        if (!this.shouldHideScrollbar()) {
+            return;
+        }
+        lgQuery_1.$LG(document.body).css('padding-right', this.bodyPaddingRight + 'px');
+        lgQuery_1.$LG(document.body).removeClass('lg-overlay-open');
+    };
     /**
      * Open lightGallery.
      * Open gallery with specific slide by passing index of the slide as parameter.
@@ -415,8 +437,8 @@ var LightGallery = /** @class */ (function () {
         if (this.lgOpened)
             return;
         this.lgOpened = true;
-        this.outer.get().focus();
         this.outer.removeClass('lg-hide-items');
+        this.hideScrollbar();
         // Add display block, but still has opacity 0
         this.$container.addClass('lg-show');
         var itemsToBeInsertedToDom = this.getItemsToBeInsertedToDom(index, index);
@@ -475,6 +497,12 @@ var LightGallery = /** @class */ (function () {
                 _this.$backdrop.addClass('in');
                 _this.$container.addClass('lg-show-in');
             }, 10);
+            setTimeout(function () {
+                if (_this.settings.trapFocus &&
+                    document.body === _this.settings.container) {
+                    _this.trapFocus();
+                }
+            }, _this.settings.backdropDuration + 50);
             // lg-visible class resets gallery opacity to 1
             if (!_this.zoomFromOrigin || !transform) {
                 setTimeout(function () {
@@ -862,9 +890,11 @@ var LightGallery = /** @class */ (function () {
             if (!$currentSlide.hasClass('lg-loaded')) {
                 setTimeout(function () {
                     if (_this.getSlideType(currentGalleryItem) === 'image') {
+                        var alt = currentGalleryItem.alt;
+                        var altAttr = alt ? 'alt="' + alt + '"' : '';
                         $currentSlide
                             .find('.lg-img-wrap')
-                            .append(lg_utils_1.default.getImgMarkup(index, src, '', srcset, sizes, currentGalleryItem.sources));
+                            .append(lg_utils_1.default.getImgMarkup(index, src, altAttr, srcset, sizes, currentGalleryItem.sources));
                         if (srcset || sources) {
                             var $img = $currentSlide.find('.lg-object');
                             _this.initPictureFill($img);
@@ -1650,6 +1680,36 @@ var LightGallery = /** @class */ (function () {
             $element.off("click.lgcustom-item-" + $element.attr('data-lg-id'));
         }
     };
+    LightGallery.prototype.trapFocus = function () {
+        var _this = this;
+        this.$container.get().focus({
+            preventScroll: true,
+        });
+        lgQuery_1.$LG(window).on("keydown.lg.global" + this.lgId, function (e) {
+            if (!_this.lgOpened) {
+                return;
+            }
+            var isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+            if (!isTabPressed) {
+                return;
+            }
+            var focusableEls = lg_utils_1.default.getFocusableElements(_this.$container.get());
+            var firstFocusableEl = focusableEls[0];
+            var lastFocusableEl = focusableEls[focusableEls.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === firstFocusableEl) {
+                    lastFocusableEl.focus();
+                    e.preventDefault();
+                }
+            }
+            else {
+                if (document.activeElement === lastFocusableEl) {
+                    firstFocusableEl.focus();
+                    e.preventDefault();
+                }
+            }
+        });
+    };
     LightGallery.prototype.manageCloseGallery = function () {
         var _this = this;
         if (!this.settings.closable)
@@ -1700,7 +1760,9 @@ var LightGallery = /** @class */ (function () {
             return 0;
         }
         this.LGel.trigger(lg_events_1.lGEvents.beforeClose);
-        lgQuery_1.$LG(window).scrollTop(this.prevScrollTop);
+        if (this.settings.resetScrollPosition && !this.settings.hideScrollbar) {
+            lgQuery_1.$LG(window).scrollTop(this.prevScrollTop);
+        }
         var currentItem = this.items[this.index];
         var transform;
         if (this.zoomFromOrigin && currentItem) {
@@ -1745,6 +1807,8 @@ var LightGallery = /** @class */ (function () {
                 _this.outer.removeClass('lg-zoom-from-image');
             }
             _this.$container.removeClass('lg-show');
+            // Reset scrollbar
+            _this.resetScrollBar();
             // Need to remove inline opacity as it is used in the stylesheet as well
             _this.$backdrop
                 .removeAttr('style')
@@ -1757,8 +1821,8 @@ var LightGallery = /** @class */ (function () {
                     instance: _this,
                 });
             }
-            if (_this.outer.get()) {
-                _this.outer.get().blur();
+            if (_this.$container.get()) {
+                _this.$container.get().blur();
             }
             _this.lgOpened = false;
         }, removeTimeout + 100);

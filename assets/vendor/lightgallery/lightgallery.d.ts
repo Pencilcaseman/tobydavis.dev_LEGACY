@@ -26,6 +26,7 @@ export declare class LightGallery {
     $content: lgQuery;
     $toolbar: lgQuery;
     prevScrollTop: number;
+    bodyPaddingRight: number;
     private zoomFromOrigin;
     private currentImageSize?;
     private isDummyImageRemoved;
@@ -99,6 +100,9 @@ export declare class LightGallery {
      */
     updateSlides(items: GalleryItem[], index: number): void;
     getItems(): GalleryItem[];
+    shouldHideScrollbar(): boolean;
+    hideScrollbar(): void;
+    resetScrollBar(): void;
     /**
      * Open lightGallery.
      * Open gallery with specific slide by passing index of the slide as parameter.
@@ -251,6 +255,7 @@ export declare class LightGallery {
      */
     toggleMaximize(): void;
     invalidateItems(): void;
+    trapFocus(): void;
     manageCloseGallery(): void;
     /**
      * Close lightGallery if it is opened.

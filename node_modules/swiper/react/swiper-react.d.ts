@@ -49,9 +49,6 @@ interface SwiperProps extends SwiperOptions {
    * Event will be fired when swiper updates the hash
    */
   onHashSet?: (swiper: SwiperClass) => void;/**
-   * Event will be fired on key press
-   */
-  onKeyPress?: (swiper: SwiperClass, keyCode: string) => void;/**
    * Event will be fired in the beginning of lazy loading of image
    */
   onLazyImageLoad?: (swiper: SwiperClass, slideEl: HTMLElement, imageEl: HTMLElement) => void;
@@ -59,6 +56,9 @@ interface SwiperProps extends SwiperOptions {
    * Event will be fired when lazy loading image will be loaded
    */
   onLazyImageReady?: (swiper: SwiperClass, slideEl: HTMLElement, imageEl: HTMLElement) => void;/**
+   * Event will be fired on key press
+   */
+  onKeyPress?: (swiper: SwiperClass, keyCode: string) => void;/**
    * Event will be fired on mousewheel scroll
    */
   onScroll?: (swiper: SwiperClass, event: WheelEvent) => void;/**

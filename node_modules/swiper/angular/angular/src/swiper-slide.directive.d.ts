@@ -23,5 +23,5 @@ export declare class SwiperSlideDirective {
     private _classNames;
     constructor(template: TemplateRef<any>);
     static ɵfac: i0.ɵɵFactoryDeclaration<SwiperSlideDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SwiperSlideDirective, "ng-template[swiperSlide]", never, { "virtualIndex": "virtualIndex"; "class": "class"; "ngClass": "ngClass"; "autoplayDelay": "data-swiper-autoplay"; "zoom": "zoom"; }, {}, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<SwiperSlideDirective, "ng-template[swiperSlide]", never, { "virtualIndex": "virtualIndex"; "class": "class"; "ngClass": "ngClass"; "autoplayDelay": "data-swiper-autoplay"; "zoom": "zoom"; }, {}, never>;
 }

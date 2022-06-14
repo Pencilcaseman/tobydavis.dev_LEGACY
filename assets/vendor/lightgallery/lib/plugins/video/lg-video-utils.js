@@ -12,13 +12,21 @@ exports.getVimeoURLParams = function (defaultParams, videoInfo) {
     if (!videoInfo || !videoInfo.vimeo)
         return '';
     var urlParams = videoInfo.vimeo[2] || '';
-    urlParams =
-        urlParams[0] == '?' ? '&' + urlParams.slice(1) : urlParams || '';
-    var defaultPlayerParams = defaultParams
+    var defaultPlayerParams = defaultParams && Object.keys(defaultParams).length !== 0
         ? '&' + exports.param(defaultParams)
         : '';
-    // For vimeo last parms gets priority if duplicates found
-    var vimeoPlayerParams = "?autoplay=0&muted=1" + defaultPlayerParams + urlParams;
+    // Support private video
+    var urlWithHash = videoInfo.vimeo[0].split('/').pop() || '';
+    var urlWithHashWithParams = urlWithHash.split('?')[0] || '';
+    var hash = urlWithHashWithParams.split('#')[0];
+    var isPrivate = videoInfo.vimeo[1] !== hash;
+    if (isPrivate) {
+        urlParams = urlParams.replace("/" + hash, '');
+    }
+    urlParams =
+        urlParams[0] == '?' ? '&' + urlParams.slice(1) : urlParams || '';
+    // For vimeo last params gets priority if duplicates found
+    var vimeoPlayerParams = "?autoplay=0&muted=1" + (isPrivate ? "&h=" + hash : '') + defaultPlayerParams + urlParams;
     return vimeoPlayerParams;
 };
 //# sourceMappingURL=lg-video-utils.js.map

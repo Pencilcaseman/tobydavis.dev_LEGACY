@@ -142,7 +142,7 @@ export interface LightGalleryCoreSettings {
      * Also, toggle thumbnails button is not displayed if allowMediaOverlap is false
      * <section>
      * Note - Changing the position of the media on every slide transition creates a flickering effect.
-     * Therefore, The height of the caption is calculated dynamically, only once based on the first slide caption.
+     * Therefore, the height of the caption is calculated dynamically, only once based on the first slide caption.
      * </section>
      * <section>
      * if you have dynamic captions for each media,
@@ -175,6 +175,18 @@ export interface LightGalleryCoreSettings {
      * aria-describedby attribute for gallery
      */
     ariaDescribedby: string;
+    /**
+     * Hide scrollbar when gallery is opened
+     * @version V2.5.0
+     */
+    hideScrollbar: boolean;
+    /**
+     * Reset to previous scrollPosition when lightGallery is closed
+     * @description By default, lightGallery doesn't hide the scrollbar for a smooth opening transition.
+     * If a user changes the scroll position, lightGallery resets it to the previous value
+     * @version V2.5.0
+     */
+    resetScrollPosition: boolean;
     /**
      * If false user won't be abel to close the gallery at all
      * This is useful for creating inline galleries.
@@ -211,6 +223,11 @@ export interface LightGalleryCoreSettings {
      * Enable keyboard navigation
      */
     keyPress: boolean;
+    /**
+     * Trap focus within the lightGallery
+     * @version V2.5.0
+     */
+    trapFocus: boolean;
     /**
      * If false, prev/next buttons will not be displayed.
      */

@@ -32,7 +32,7 @@
     }
 
     /*!
-     * lightgallery | 2.4.0 | January 29th 2022
+     * lightgallery | 2.5.0 | June 13th 2022
      * http://www.lightgalleryjs.com/
      * Copyright (c) 2020 Sachin Neravath;
      * @license GPLv3
@@ -129,6 +129,8 @@
         defaultCaptionHeight: 0,
         ariaLabelledby: '',
         ariaDescribedby: '',
+        resetScrollPosition: true,
+        hideScrollbar: false,
         closable: true,
         swipeToClose: true,
         closeOnTap: true,
@@ -137,6 +139,7 @@
         loop: true,
         escKey: true,
         keyPress: true,
+        trapFocus: true,
         controls: true,
         slideEndAnimation: true,
         hideControlOnEnd: false,
@@ -753,6 +756,14 @@
             }
             return "<div class=\"lg-video-cont " + videoClass + "\" style=\"" + videoContStyle + "\">\n                <div class=\"lg-video-play-button\">\n                <svg\n                    viewBox=\"0 0 20 20\"\n                    preserveAspectRatio=\"xMidYMid\"\n                    focusable=\"false\"\n                    aria-labelledby=\"" + playVideoString + "\"\n                    role=\"img\"\n                    class=\"lg-video-play-icon\"\n                >\n                    <title>" + playVideoString + "</title>\n                    <polygon class=\"lg-video-play-icon-inner\" points=\"1,0 20,10 1,20\"></polygon>\n                </svg>\n                <svg class=\"lg-video-play-icon-bg\" viewBox=\"0 0 50 50\" focusable=\"false\">\n                    <circle cx=\"50%\" cy=\"50%\" r=\"20\"></circle></svg>\n                <svg class=\"lg-video-play-icon-circle\" viewBox=\"0 0 50 50\" focusable=\"false\">\n                    <circle cx=\"50%\" cy=\"50%\" r=\"20\"></circle>\n                </svg>\n            </div>\n            " + (dummyImg || '') + "\n            <img class=\"lg-object lg-video-poster\" src=\"" + _poster + "\" />\n        </div>";
         },
+        getFocusableElements: function (container) {
+            var elements = container.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
+            var visibleElements = [].filter.call(elements, function (element) {
+                var style = window.getComputedStyle(element);
+                return style.display !== 'none' && style.visibility !== 'hidden';
+            });
+            return visibleElements;
+        },
         /**
          * @desc Create dynamic elements array from gallery items when dynamic option is false
          * It helps to avoid frequent DOM interaction
@@ -856,6 +867,7 @@
             this.currentItemsInDom = [];
             // Scroll top value before lightGallery is opened
             this.prevScrollTop = 0;
+            this.bodyPaddingRight = 0;
             this.isDummyImageRemoved = false;
             this.dragOrSwipeEnabled = false;
             this.mediaContainerPosition = {
@@ -1203,6 +1215,27 @@
                 return this.settings.dynamicEl || [];
             }
         };
+        LightGallery.prototype.shouldHideScrollbar = function () {
+            return (this.settings.hideScrollbar &&
+                document.body === this.settings.container);
+        };
+        LightGallery.prototype.hideScrollbar = function () {
+            if (!this.shouldHideScrollbar()) {
+                return;
+            }
+            this.bodyPaddingRight = parseFloat($LG('body').style().paddingRight);
+            var bodyRect = document.documentElement.getBoundingClientRect();
+            var scrollbarWidth = window.innerWidth - bodyRect.width;
+            $LG(document.body).css('padding-right', scrollbarWidth + this.bodyPaddingRight + 'px');
+            $LG(document.body).addClass('lg-overlay-open');
+        };
+        LightGallery.prototype.resetScrollBar = function () {
+            if (!this.shouldHideScrollbar()) {
+                return;
+            }
+            $LG(document.body).css('padding-right', this.bodyPaddingRight + 'px');
+            $LG(document.body).removeClass('lg-overlay-open');
+        };
         /**
          * Open lightGallery.
          * Open gallery with specific slide by passing index of the slide as parameter.
@@ -1238,8 +1271,8 @@
             if (this.lgOpened)
                 return;
             this.lgOpened = true;
-            this.outer.get().focus();
             this.outer.removeClass('lg-hide-items');
+            this.hideScrollbar();
             // Add display block, but still has opacity 0
             this.$container.addClass('lg-show');
             var itemsToBeInsertedToDom = this.getItemsToBeInsertedToDom(index, index);
@@ -1298,6 +1331,12 @@
                     _this.$backdrop.addClass('in');
                     _this.$container.addClass('lg-show-in');
                 }, 10);
+                setTimeout(function () {
+                    if (_this.settings.trapFocus &&
+                        document.body === _this.settings.container) {
+                        _this.trapFocus();
+                    }
+                }, _this.settings.backdropDuration + 50);
                 // lg-visible class resets gallery opacity to 1
                 if (!_this.zoomFromOrigin || !transform) {
                     setTimeout(function () {
@@ -1685,9 +1724,11 @@
                 if (!$currentSlide.hasClass('lg-loaded')) {
                     setTimeout(function () {
                         if (_this.getSlideType(currentGalleryItem) === 'image') {
+                            var alt = currentGalleryItem.alt;
+                            var altAttr = alt ? 'alt="' + alt + '"' : '';
                             $currentSlide
                                 .find('.lg-img-wrap')
-                                .append(utils.getImgMarkup(index, src, '', srcset, sizes, currentGalleryItem.sources));
+                                .append(utils.getImgMarkup(index, src, altAttr, srcset, sizes, currentGalleryItem.sources));
                             if (srcset || sources) {
                                 var $img = $currentSlide.find('.lg-object');
                                 _this.initPictureFill($img);
@@ -2473,6 +2514,36 @@
                 $element.off("click.lgcustom-item-" + $element.attr('data-lg-id'));
             }
         };
+        LightGallery.prototype.trapFocus = function () {
+            var _this = this;
+            this.$container.get().focus({
+                preventScroll: true,
+            });
+            $LG(window).on("keydown.lg.global" + this.lgId, function (e) {
+                if (!_this.lgOpened) {
+                    return;
+                }
+                var isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+                if (!isTabPressed) {
+                    return;
+                }
+                var focusableEls = utils.getFocusableElements(_this.$container.get());
+                var firstFocusableEl = focusableEls[0];
+                var lastFocusableEl = focusableEls[focusableEls.length - 1];
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusableEl) {
+                        lastFocusableEl.focus();
+                        e.preventDefault();
+                    }
+                }
+                else {
+                    if (document.activeElement === lastFocusableEl) {
+                        firstFocusableEl.focus();
+                        e.preventDefault();
+                    }
+                }
+            });
+        };
         LightGallery.prototype.manageCloseGallery = function () {
             var _this = this;
             if (!this.settings.closable)
@@ -2523,7 +2594,9 @@
                 return 0;
             }
             this.LGel.trigger(lGEvents.beforeClose);
-            $LG(window).scrollTop(this.prevScrollTop);
+            if (this.settings.resetScrollPosition && !this.settings.hideScrollbar) {
+                $LG(window).scrollTop(this.prevScrollTop);
+            }
             var currentItem = this.items[this.index];
             var transform;
             if (this.zoomFromOrigin && currentItem) {
@@ -2568,6 +2641,8 @@
                     _this.outer.removeClass('lg-zoom-from-image');
                 }
                 _this.$container.removeClass('lg-show');
+                // Reset scrollbar
+                _this.resetScrollBar();
                 // Need to remove inline opacity as it is used in the stylesheet as well
                 _this.$backdrop
                     .removeAttr('style')
@@ -2580,8 +2655,8 @@
                         instance: _this,
                     });
                 }
-                if (_this.outer.get()) {
-                    _this.outer.get().blur();
+                if (_this.$container.get()) {
+                    _this.$container.get().blur();
                 }
                 _this.lgOpened = false;
             }, removeTimeout + 100);

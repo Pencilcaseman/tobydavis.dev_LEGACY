@@ -1,5 +1,5 @@
 /*!
- * lightgallery | 2.4.0 | January 29th 2022
+ * lightgallery | 2.5.0 | June 13th 2022
  * http://www.lightgalleryjs.com/
  * Copyright (c) 2020 Sachin Neravath;
  * @license GPLv3
@@ -39,6 +39,7 @@ var videoSettings = {
     gotoNextSlideOnVideoEnd: true,
     autoplayVideoOnSlide: false,
     videojs: false,
+    videojsTheme: '',
     videojsOptions: {},
 };
 
@@ -87,13 +88,21 @@ var getVimeoURLParams = function (defaultParams, videoInfo) {
     if (!videoInfo || !videoInfo.vimeo)
         return '';
     var urlParams = videoInfo.vimeo[2] || '';
-    urlParams =
-        urlParams[0] == '?' ? '&' + urlParams.slice(1) : urlParams || '';
-    var defaultPlayerParams = defaultParams
+    var defaultPlayerParams = defaultParams && Object.keys(defaultParams).length !== 0
         ? '&' + param(defaultParams)
         : '';
-    // For vimeo last parms gets priority if duplicates found
-    var vimeoPlayerParams = "?autoplay=0&muted=1" + defaultPlayerParams + urlParams;
+    // Support private video
+    var urlWithHash = videoInfo.vimeo[0].split('/').pop() || '';
+    var urlWithHashWithParams = urlWithHash.split('?')[0] || '';
+    var hash = urlWithHashWithParams.split('#')[0];
+    var isPrivate = videoInfo.vimeo[1] !== hash;
+    if (isPrivate) {
+        urlParams = urlParams.replace("/" + hash, '');
+    }
+    urlParams =
+        urlParams[0] == '?' ? '&' + urlParams.slice(1) : urlParams || '';
+    // For vimeo last params gets priority if duplicates found
+    var vimeoPlayerParams = "?autoplay=0&muted=1" + (isPrivate ? "&h=" + hash : '') + defaultPlayerParams + urlParams;
     return vimeoPlayerParams;
 };
 
@@ -308,7 +317,9 @@ var Video = /** @class */ (function () {
             Object.keys(videoAttributes_1 || {}).forEach(function (key) {
                 html5VideoAttrs_1 += key + "=\"" + videoAttributes_1[key] + "\" ";
             });
-            video = "<video class=\"lg-video-object lg-html5 " + (this.settings.videojs ? 'video-js' : '') + "\" " + html5VideoAttrs_1 + ">\n                " + html5VideoMarkup + "\n                Your browser does not support HTML5 video.\n            </video>";
+            video = "<video class=\"lg-video-object lg-html5 " + (this.settings.videojs && this.settings.videojsTheme
+                ? this.settings.videojsTheme + ' '
+                : '') + " " + (this.settings.videojs ? ' video-js' : '') + "\" " + html5VideoAttrs_1 + ">\n                " + html5VideoMarkup + "\n                Your browser does not support HTML5 video.\n            </video>";
         }
         return video;
     };
