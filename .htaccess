@@ -5,11 +5,11 @@ ErrorDocument 404 /error404.html
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([^\.]+)$ $1.html [NC, L]
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
 # Redirect www.tobydavis.dev to tobydavis.dev (no www)
 # to ensure a valid SSL certificate
-# RewriteEngine On
-# RewriteBase /
-# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-# RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
