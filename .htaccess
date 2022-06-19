@@ -10,6 +10,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC, L]
 # Redirect www.tobydavis.dev to tobydavis.dev (no www)
 # to ensure a valid SSL certificate
 RewriteEngine On
-RewriteCond %{HTTPS} on
-RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
