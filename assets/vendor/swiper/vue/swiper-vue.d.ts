@@ -488,6 +488,9 @@ declare const Swiper: DefineComponent<
    * Event will be fired when swiper updates the hash
    */
   hashSet: (swiper: SwiperClass) => void;/**
+   * Event will be fired on key press
+   */
+  keyPress: (swiper: SwiperClass, keyCode: string) => void;/**
    * Event will be fired in the beginning of lazy loading of image
    */
   lazyImageLoad: (swiper: SwiperClass, slideEl: HTMLElement, imageEl: HTMLElement) => void;
@@ -495,19 +498,9 @@ declare const Swiper: DefineComponent<
    * Event will be fired when lazy loading image will be loaded
    */
   lazyImageReady: (swiper: SwiperClass, slideEl: HTMLElement, imageEl: HTMLElement) => void;/**
-   * Event will be fired on key press
-   */
-  keyPress: (swiper: SwiperClass, keyCode: string) => void;/**
    * Event will be fired on mousewheel scroll
    */
   scroll: (swiper: SwiperClass, event: WheelEvent) => void;/**
-   * Event will be fired on navigation hide
-   */
-  navigationHide: (swiper: SwiperClass) => void;
-  /**
-   * Event will be fired on navigation show
-   */
-  navigationShow: (swiper: SwiperClass) => void;/**
    * Event will be fired after pagination rendered
    */
   paginationRender: (swiper: SwiperClass, paginationEl: HTMLElement) => void;
@@ -526,6 +519,21 @@ declare const Swiper: DefineComponent<
    * Event will be fired on pagination show
    */
   paginationShow: (swiper: SwiperClass) => void;/**
+   * Event will be fired on navigation hide
+   */
+  navigationHide: (swiper: SwiperClass) => void;
+  /**
+   * Event will be fired on navigation show
+   */
+  navigationShow: (swiper: SwiperClass) => void;
+  /**
+   * Event will be fired on navigation prev button click
+   */
+  navigationPrev: (swiper: SwiperClass) => void;
+  /**
+   * Event will be fired on navigation next button click
+   */
+  navigationNext: (swiper: SwiperClass) => void;/**
    * Event will be fired on draggable scrollbar drag start
    */
   scrollbarDragStart: (swiper: SwiperClass, event: MouseEvent | TouchEvent | PointerEvent) => void;

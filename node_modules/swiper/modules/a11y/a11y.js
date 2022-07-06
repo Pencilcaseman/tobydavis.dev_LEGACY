@@ -203,7 +203,10 @@ export default function A11y(_ref) {
       addElRoleDescription($(swiper.slides), params.itemRoleDescriptionMessage);
     }
 
-    addElRole($(swiper.slides), params.slideRole);
+    if (params.slideRole) {
+      addElRole($(swiper.slides), params.slideRole);
+    }
+
     const slidesLength = swiper.params.loop ? swiper.slides.filter(el => !el.classList.contains(swiper.params.slideDuplicateClass)).length : swiper.slides.length;
 
     if (params.slideLabelMessage) {

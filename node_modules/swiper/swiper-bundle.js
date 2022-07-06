@@ -1,5 +1,5 @@
 /**
- * Swiper 8.2.4
+ * Swiper 8.3.0
  * Most modern mobile touch slider and framework with hardware accelerated transitions
  * https://swiperjs.com
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 13, 2022
+ * Released on: July 6, 2022
  */
 
 (function (global, factory) {
@@ -4818,6 +4818,23 @@
         return swiper;
       }
 
+      changeLanguageDirection(direction) {
+        const swiper = this;
+        if (swiper.rtl && direction === 'rtl' || !swiper.rtl && direction === 'ltr') return;
+        swiper.rtl = direction === 'rtl';
+        swiper.rtlTranslate = swiper.params.direction === 'horizontal' && swiper.rtl;
+
+        if (swiper.rtl) {
+          swiper.$el.addClass(`${swiper.params.containerModifierClass}rtl`);
+          swiper.el.dir = 'rtl';
+        } else {
+          swiper.$el.removeClass(`${swiper.params.containerModifierClass}rtl`);
+          swiper.el.dir = 'ltr';
+        }
+
+        swiper.update();
+      }
+
       mount(el) {
         const swiper = this;
         if (swiper.mounted) return true; // Find el
@@ -5968,12 +5985,14 @@
         e.preventDefault();
         if (swiper.isBeginning && !swiper.params.loop && !swiper.params.rewind) return;
         swiper.slidePrev();
+        emit('navigationPrev');
       }
 
       function onNextClick(e) {
         e.preventDefault();
         if (swiper.isEnd && !swiper.params.loop && !swiper.params.rewind) return;
         swiper.slideNext();
+        emit('navigationNext');
       }
 
       function init() {
@@ -6509,7 +6528,7 @@
           $el
         } = swiper.pagination;
 
-        if (swiper.params.pagination.el && swiper.params.pagination.hideOnClick && $el.length > 0 && !$(targetEl).hasClass(swiper.params.pagination.bulletClass)) {
+        if (swiper.params.pagination.el && swiper.params.pagination.hideOnClick && $el && $el.length > 0 && !$(targetEl).hasClass(swiper.params.pagination.bulletClass)) {
           if (swiper.navigation && (swiper.navigation.nextEl && targetEl === swiper.navigation.nextEl || swiper.navigation.prevEl && targetEl === swiper.navigation.prevEl)) return;
           const isHidden = $el.hasClass(swiper.params.pagination.hiddenClass);
 
@@ -8372,7 +8391,10 @@
           addElRoleDescription($(swiper.slides), params.itemRoleDescriptionMessage);
         }
 
-        addElRole($(swiper.slides), params.slideRole);
+        if (params.slideRole) {
+          addElRole($(swiper.slides), params.slideRole);
+        }
+
         const slidesLength = swiper.params.loop ? swiper.slides.filter(el => !el.classList.contains(swiper.params.slideDuplicateClass)).length : swiper.slides.length;
 
         if (params.slideLabelMessage) {
@@ -9055,7 +9077,32 @@
       function update(initial) {
         const thumbsSwiper = swiper.thumbs.swiper;
         if (!thumbsSwiper || thumbsSwiper.destroyed) return;
-        const slidesPerView = thumbsSwiper.params.slidesPerView === 'auto' ? thumbsSwiper.slidesPerViewDynamic() : thumbsSwiper.params.slidesPerView;
+        const slidesPerView = thumbsSwiper.params.slidesPerView === 'auto' ? thumbsSwiper.slidesPerViewDynamic() : thumbsSwiper.params.slidesPerView; // Activate thumbs
+
+        let thumbsToActivate = 1;
+        const thumbActiveClass = swiper.params.thumbs.slideThumbActiveClass;
+
+        if (swiper.params.slidesPerView > 1 && !swiper.params.centeredSlides) {
+          thumbsToActivate = swiper.params.slidesPerView;
+        }
+
+        if (!swiper.params.thumbs.multipleActiveThumbs) {
+          thumbsToActivate = 1;
+        }
+
+        thumbsToActivate = Math.floor(thumbsToActivate);
+        thumbsSwiper.slides.removeClass(thumbActiveClass);
+
+        if (thumbsSwiper.params.loop || thumbsSwiper.params.virtual && thumbsSwiper.params.virtual.enabled) {
+          for (let i = 0; i < thumbsToActivate; i += 1) {
+            thumbsSwiper.$wrapperEl.children(`[data-swiper-slide-index="${swiper.realIndex + i}"]`).addClass(thumbActiveClass);
+          }
+        } else {
+          for (let i = 0; i < thumbsToActivate; i += 1) {
+            thumbsSwiper.slides.eq(swiper.realIndex + i).addClass(thumbActiveClass);
+          }
+        }
+
         const autoScrollOffset = swiper.params.thumbs.autoScrollOffset;
         const useOffset = autoScrollOffset && !thumbsSwiper.params.loop;
 
@@ -9108,31 +9155,6 @@
             } else if (newThumbsIndex > currentThumbsIndex && thumbsSwiper.params.slidesPerGroup === 1) ;
 
             thumbsSwiper.slideTo(newThumbsIndex, initial ? 0 : undefined);
-          }
-        } // Activate thumbs
-
-
-        let thumbsToActivate = 1;
-        const thumbActiveClass = swiper.params.thumbs.slideThumbActiveClass;
-
-        if (swiper.params.slidesPerView > 1 && !swiper.params.centeredSlides) {
-          thumbsToActivate = swiper.params.slidesPerView;
-        }
-
-        if (!swiper.params.thumbs.multipleActiveThumbs) {
-          thumbsToActivate = 1;
-        }
-
-        thumbsToActivate = Math.floor(thumbsToActivate);
-        thumbsSwiper.slides.removeClass(thumbActiveClass);
-
-        if (thumbsSwiper.params.loop || thumbsSwiper.params.virtual && thumbsSwiper.params.virtual.enabled) {
-          for (let i = 0; i < thumbsToActivate; i += 1) {
-            thumbsSwiper.$wrapperEl.children(`[data-swiper-slide-index="${swiper.realIndex + i}"]`).addClass(thumbActiveClass);
-          }
-        } else {
-          for (let i = 0; i < thumbsToActivate; i += 1) {
-            thumbsSwiper.slides.eq(swiper.realIndex + i).addClass(thumbActiveClass);
           }
         }
       }

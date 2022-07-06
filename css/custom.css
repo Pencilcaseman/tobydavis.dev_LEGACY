@@ -13,3 +13,15 @@
 .breakWord {
     word-break: break-word;
 }
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.bolder {
+    font-weight: bolder;
+}

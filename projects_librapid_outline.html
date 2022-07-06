@@ -306,18 +306,114 @@
 
             <!-- Content -->
             <div class="col-auto">
-                <h3 class="h5 mb-4 pb-2 fw-medium">Est quis sit phasellus proin proin fringilla eu quis. Placerat
-                    praesent blandit urna eu pellentesque dictum. Aliquam duis quam interdum quis. Urna, rutrum aenean
-                    lacus phasellus. Ipsum, ac porttitor lacus orci, cras lacus, quis leo.</h3>
-                <h2 class="h4">Paragraph Title</h2>
-                <p class="mb-4 pb-2">Purus ornare nisl est nec. Nunc, enim tellus pretium viverra quisque id in metus
-                    volutpat. Urna eget velit venenatis, commodo eget massa. Magna donec dictum cras nullam platea. Diam
-                    rhoncus massa lectus pellentesque tristique. Amet commodo, egestas vitae bibendum. Volutpat elit
-                    condimentum integer tortor porttitor justo vel lobortis risus. Lacinia pellentesque fermentum tellus
-                    orci mauris, velit duis eget. Commodo justo, hac ligula molestie felis, iaculis. Vitae dui at ante
-                    orci, dictum fusce. Urna, sed urna fringilla faucibus euismod aliquet nec. Quis libero, fermentum
-                    amet eu, condimentum auctor. Sit vel ipsum sem tempus gravida et. Scelerisque blandit orci, est
-                    quis. Nisi, tellus amet est nascetur habitant faucibus ornare et vivamus.</p>
+                <h3 class="h5 mb-4 pb-2 fw-medium">LibRapid is an OpenSource library for high-efficiency
+                    calculations, written primarily in/for C++, though with a fully-featured Python interface, a Rust
+                    port and plans for other languages.</h3>
+
+                <h2 class="h2">Why is Speed Important?</h2>
+                <p class="mb-4 pb-2">When writing a program for a hobby project or simple application, performance
+                    generally isn't a huge concern to developers. It makes no difference if the program executes in
+                    \(5ms\) or \(10ms\), and hence programmers will often choose the <span
+                            class="italic">easiest</span> solution, as opposed to the most <span class="italic">efficient</span>
+                    solution. In certain applications, however, the efficiency and performance of a program is hugely
+                    important.</p>
+                <h3 class="h3">Applications where Performance is Critical</h3>
+                <p class="mb-4 pb-2">The requirements for performance in different applications varies, however the
+                    general reasoning behind the need for fast code is generally the same. Firstly, if a program needs
+                    to be responsive and fluid (e.g. a video game), the underlying program must update quickly enough to
+                    accept user input and output the response with minimal latency. This requires the program to be
+                    efficiently implemented, as slow code will reduce the overall experience of the application.</p>
+
+                <p class="mb-4 pb-2">The second common reason for high-performance code is when the code needs to be run
+                    millions of times to achieve its goal (e.g. a neural network). In this case, optimising a single
+                    function to save a few microseconds can potentially save hours when the final program is run.</p>
+
+                <p class="mb-4 pb-2">It's cases like these, where performance is critical to the application serving
+                    it's purpose, that high-performance code is needed. Without efficient, low-level implementations,
+                    the resulting program may simply be too slow to be practical to use.</p>
+
+                <h2 class="h2">What Optimisations are Present in LibRapid?</h2>
+                <p class="mb-4 pb-2">LibRapid is written in C++, which already makes it faster than many other languages
+                    such as Python, JavaScript and Java, but there are a huge number of other optimisations in place to
+                    further accelerate the library.</p>
+
+                <p class="mb-4 pb-2"></p>
+
+                <!-- Optimisation Articles (LibRapid specific) -->
+                <section class="container pt-5 mt-2 mt-lg-4 mt-xl-5">
+                    <div class="row">
+                        <!-- Content -->
+                        <div class="col-xl-7 col-lg-8 col-md-7 order-md-1 mb-5">
+                            <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4">LibRapid Optimisations</h2>
+                            <div class="steps steps-sm">
+                                <!-- 1. Lazy-Evaluated Results -->
+                                <div class="step">
+                                    <div class="step-number">
+                                        <div class="step-number-inner">1</div>
+                                    </div>
+                                    <div class="step-body">
+                                        <!-- Color background on hover -->
+                                        <article class="card border-0 shadow-sm card-hover-primary">
+                                            <div class="card-body pb-0">
+                                                <h3 class="h4">
+                                                    <a href="#" class="stretched-link">Data Organisation</a>
+                                                </h3>
+                                                <p class="mb-0">The aligned, contiguous storage of the Array class
+                                                    allows for more data prefetching, more cache hits and better
+                                                    optimisation by the compiler.</p>
+                                            </div>
+                                            <p></p>
+                                        </article>
+                                    </div>
+                                </div>
+
+                                <!-- 2. Lazy-Evaluated Results -->
+                                <div class="step">
+                                    <div class="step-number">
+                                        <div class="step-number-inner">2</div>
+                                    </div>
+                                    <div class="step-body">
+                                        <!-- Color background on hover -->
+                                        <article class="card border-0 shadow-sm card-hover-primary">
+                                            <div class="card-body pb-0">
+                                                <h3 class="h4">
+                                                    <a href="#" class="stretched-link">Lazy-Evaluated Results</a>
+                                                </h3>
+                                                <p class="mb-0">LibRapid avoids calculating the result of an operation
+                                                    as far as possible, only evaluating the result when it is absolutely
+                                                    required.</p>
+                                            </div>
+                                            <p></p>
+                                        </article>
+                                    </div>
+                                </div>
+
+                                <!-- 3. Multithreaded Code -->
+                                <div class="step">
+                                    <div class="step-number">
+                                        <div class="step-number-inner">3</div>
+                                    </div>
+                                    <div class="step-body">
+                                        <!-- Color background on hover -->
+                                        <article class="card border-0 shadow-sm card-hover-primary">
+                                            <div class="card-body pb-0">
+                                                <h3 class="h4">
+                                                    <a href="#" class="stretched-link">Multithreaded Code</a>
+                                                </h3>
+                                                <p class="mb-0">By running large loops in parallel, code execution can
+                                                    be dramatically improved. Other optimisations include forcing
+                                                    single-threaded code for small matrices, as the overhead of spawning
+                                                    threads can reduce performance.</p>
+                                            </div>
+                                            <p></p>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
 
                 <pre><code class="language-python">print("Hello, World")
 print("Hello, World! This is HIGHLIGHTED!")
@@ -326,7 +422,7 @@ for i in range(10):
 
                 <p></p>
 
-                <pre><code class="language-c++">template&lt&gt
+                <pre class="line-numbers" style="height: 20rem;"><code class="language-c++">template&lt&gt
 struct traits&ltdouble&gt {
     static constexpr bool IsScalar		 = true;
     using Valid							 = std::true_type;
