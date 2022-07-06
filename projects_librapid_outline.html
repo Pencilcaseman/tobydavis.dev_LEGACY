@@ -303,10 +303,9 @@
     <!-- Post content + Sharing -->
     <section class="container mb-5 pt-4 pb-2 py-mg-4">
         <div class="row gy-4">
-
             <!-- Content -->
-            <div class="col-auto">
-                <h3 class="h5 mb-4 pb-2 fw-medium">LibRapid is an OpenSource library for high-efficiency
+            <div class="col-md-9">
+                <h3 class="h5 mb-4 pb-2 fw-medium">LibRapid is an open-source library for high-efficiency
                     calculations, written primarily in/for C++, though with a fully-featured Python interface, a Rust
                     port and plans for other languages.</h3>
 
@@ -340,11 +339,11 @@
                 <p class="mb-4 pb-2"></p>
 
                 <!-- Optimisation Articles (LibRapid specific) -->
-                <section class="container pt-5 mt-2 mt-lg-4 mt-xl-5">
+                <section class="container pt-1 mt-1 mt-md-1 mt-md-1">
                     <div class="row">
                         <!-- Content -->
                         <div class="col-xl-7 col-lg-8 col-md-7 order-md-1 mb-5">
-                            <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4">LibRapid Optimisations</h2>
+                            <!--                            <h2 class="h2 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4">LibRapid Optimisations</h2>-->
                             <div class="steps steps-sm">
                                 <!-- 1. Lazy-Evaluated Results -->
                                 <div class="step">
@@ -355,7 +354,7 @@
                                         <!-- Color background on hover -->
                                         <article class="card border-0 shadow-sm card-hover-primary">
                                             <div class="card-body pb-0">
-                                                <h3 class="h4">
+                                                <h3 class="h3">
                                                     <a href="#" class="stretched-link">Data Organisation</a>
                                                 </h3>
                                                 <p class="mb-0">The aligned, contiguous storage of the Array class
@@ -376,7 +375,7 @@
                                         <!-- Color background on hover -->
                                         <article class="card border-0 shadow-sm card-hover-primary">
                                             <div class="card-body pb-0">
-                                                <h3 class="h4">
+                                                <h3 class="h3">
                                                     <a href="#" class="stretched-link">Lazy-Evaluated Results</a>
                                                 </h3>
                                                 <p class="mb-0">LibRapid avoids calculating the result of an operation
@@ -397,7 +396,7 @@
                                         <!-- Color background on hover -->
                                         <article class="card border-0 shadow-sm card-hover-primary">
                                             <div class="card-body pb-0">
-                                                <h3 class="h4">
+                                                <h3 class="h3">
                                                     <a href="#" class="stretched-link">Multithreaded Code</a>
                                                 </h3>
                                                 <p class="mb-0">By running large loops in parallel, code execution can
@@ -409,116 +408,134 @@
                                         </article>
                                     </div>
                                 </div>
+
+                                <!-- 4. Vectorised Instructions -->
+                                <div class="step">
+                                    <div class="step-number">
+                                        <div class="step-number-inner">4</div>
+                                    </div>
+                                    <div class="step-body">
+                                        <!-- Color background on hover -->
+                                        <article class="card border-0 shadow-sm card-hover-primary">
+                                            <div class="card-body pb-0">
+                                                <h3 class="h3">
+                                                    <a href="#" class="stretched-link">Vectorised Instructions</a>
+                                                </h3>
+                                                <p class="mb-0">By using SIMD machine-code instructions present in your
+                                                    CPU, LibRapid can perform 2, 4, 8 or even 16 calculations per
+                                                    instruction call, resulting in improved cache hits and more
+                                                    efficient processing.</p>
+                                            </div>
+                                            <p></p>
+                                        </article>
+                                    </div>
+                                </div>
+
+                                <!-- 5. Concatenation of Instructions -->
+                                <div class="step">
+                                    <div class="step-number">
+                                        <div class="step-number-inner">5</div>
+                                    </div>
+                                    <div class="step-body">
+                                        <!-- Color background on hover -->
+                                        <article class="card border-0 shadow-sm card-hover-primary">
+                                            <div class="card-body pb-0">
+                                                <h3 class="h3">
+                                                    <a href="#" class="stretched-link">Instruction Concatenation</a>
+                                                </h3>
+                                                <p class="mb-0">Operations on Arrays are concatenated together, forming
+                                                    a single, optimised loop at compile time. This means you can string
+                                                    more operations together without dramatically increasing
+                                                    performance.</p>
+                                            </div>
+                                            <p></p>
+                                        </article>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
+                <div>
+                    <h3 class="h3 line-numbers">Basic Example</h3>
+                    <pre><code class="language-c++">// Create an array of floats with dimensions [234, 567]
+auto x = lrc::Array&ltfloat&gt(lrc::Extent(234, 567));
 
-                <pre><code class="language-python">print("Hello, World")
-print("Hello, World! This is HIGHLIGHTED!")
-for i in range(10):
-    print(i + 1)</code></pre>
+// Fill the array with random values
+for (int i = 0; i < 234; ++i) {
+    for (int j = 0; j < 567; ++j) {
+        x[i][j] = lrc::random(-1, 1);
+    }
+}
 
-                <p></p>
-
-                <pre class="line-numbers" style="height: 20rem;"><code class="language-c++">template&lt&gt
-struct traits&ltdouble&gt {
-    static constexpr bool IsScalar		 = true;
-    using Valid							 = std::true_type;
-    using Scalar						 = double;
-    using BaseScalar					 = double;
-    using StorageType					 = memory::DenseStorage&ltdouble&gt;
-    using Packet						 = Vc::Vector&ltBaseScalar&gt;
-    using Device						 = device::CPU;
-    static constexpr int64_t PacketWidth = Vc::Vector&ltBaseScalar&gt::size();
-    static constexpr char Name[]		 = "double";
-    static constexpr uint64_t Flags		 = flags::PacketArithmetic | flags::ScalarArithmetic |
-                                           flags::PacketLogical | flags::ScalarLogical;
-};</code></pre>
+// Print the array, formatting values to 3dp
+fmt::print("{:.3f}\n", x);
+                    </code></pre>
+                </div>
 
                 <p></p>
 
-                <p class="mb-4 pb-2">Tempor donec aliquam est, a. Sit arcu tellus pharetra, bibendum hendrerit arcu,
-                    sed. Scelerisque dui enim libero sit ac sed lacus lectus. Quam in iaculis scelerisque feugiat nibh
-                    mi. Maecenas posuere lobortis praesent iaculis sagittis. Egestas vel at praesent ipsum pretium
-                    faucibus adipiscing gravida feugiat. Lacus, rhoncus velit at non nunc, quam urna, phasellus
-                    facilisis. Cursus elit posuere amet tortor at. Mi tristique congue vulputate eget in pellentesque
-                    tincidunt. In viverra est id nibh. Nunc tellus ultrices magna turpis. Viverra est morbi posuere
-                    dapibus nisi habitasse. Id tristique cursus vel metus.</p>
+                <p class="mb-4 pb-2"></p>
 
-                <!-- Quotation -->
-                <figure class="position-relative mb-4 ps-4">
-                    <span class="position-absolute top-0 start-0 w-3 h-100 bg-primary"></span>
-                    <blockquote class="blockquote fs-xl fw-medium text-dark ps-1 ps-sm-3">
-                        <p>Sollicitudin eget massa, elementum, purus nec fermentum vitae, elementum. Tincidunt vulputate
-                            lorem cursus id. Dictum tincidunt mi ornare tristique. Id sit elit pulvinar eu. Tempus vel,
-                            mauris sed proin aliquet vulputate cras est. Ut ornare eget a viverra.</p>
-                    </blockquote>
-                </figure>
-
-                <p class="mb-4 pb-2">Pellentesque laoreet neque ut dictumst fames scelerisque. In malesuada orci dapibus
-                    risus tellus, amet, ultrices sagittis a. Turpis vel tincidunt tristique maecenas cursus tortor,
-                    suscipit ut. Ullamcorper at faucibus dolor tortor suspendisse suscipit senectus convallis aliquam.
-                    At orci amet facilisi nunc mi vitae iaculis diam a. Mauris venenatis sed purus cursus torte.</p>
-                <h2 class="h4">Paragraph Title 2</h2>
-                <p class="mb-4 pb-2">Praesent sed pulvinar posuere nisl tincidunt. Iaculis sit quam magna congue. Amet
-                    vel non aliquet habitasse. Egestas erat odio et, eleifend turpis etiam blandit interdum. Nec augue
-                    ut senectus quisque diam quis. At augue accumsan, in bibendum. A eget et, eget quisque egestas
-                    netus vel. Velit, aliquet turpis convallis ullamcorper. Scelerisque sagittis condimentum pretium
-                    in vitae etiam lacinia quis amet. Porttitor consequat, sollicitudin vivamus pharetra nibh faucibus
-                    neque, viverra. Praesent amet sed lacus vitae.</p>
                 <h4 class="h6">
                     <i class="bx bx-plus-circle me-1 mt-n1 align-middle fs-5 text-primary"></i>
-                    PROS
+                    Why use LibRapid
                 </h4>
                 <ul class="mb-4 pb-2 ps-4">
-                    <li class="mb-1">A eu, ac nunc, volutpat. Augue enim ac justo, at elementum, arcu.</li>
-                    <li class="mb-1">At sodales quam felis ullamcorper iaculis tristique. Felis, etiam felis
-                        pellentesque sit neque.
+                    <li class="mb-1">Faster execution than competing libraries</li>
+                    <li class="mb-1">Support for CPU and GPU arrays, as well as extended data types, such as <code>float16</code>
                     </li>
-                    <li class="mb-1">Porta ipsum quis lacus eu ipsum mattis sit quis. Massa, massa lectus porttitor
-                        laoreet ultricies odio fermentum arcu quam.
-                    </li>
-                    <li class="mb-1">Accumsan arcu neque, nisl, pellentesque fames justo consequat blandit lacus. Eget
-                        odio vel nulla vel.
-                    </li>
-                    <li class="mb-1">Diam ac phasellus est, eu urna purus blandit aliquam. Vitae accumsan et
-                        pellentesque diam in.
-                    </li>
-                    <li>Tellus arcu, lectus tincidunt neque nunc. Bibendum lacus, molestie ultrices sed arcu.</li>
+                    <li class="mb-1">Automatic packaging and linking with BLAS libraries</li>
+                    <li class="mb-1">Simple, consistent, easy to use interface for C++, Rust and Python</li>
+                    <li class="mb-1">Wide variety of helper functions and classes to ease development</li>
+                    <li class="mb-1">Automatic detection of CPU/GPU capabilities and corresponding optimisations</li>
                 </ul>
                 <h4 class="h6">
                     <i class="bx bx-minus-circle me-1 mt-n1 align-middle fs-5 text-primary"></i>
-                    CONS
+                    Why not to use LibRapid
                 </h4>
                 <ul class="mb-4 pb-2 ps-4">
-                    <li class="mb-1">Donec maecenas justo, et tortor quam elementum pharetra velit. Auctor dictum purus
-                        sollicitudin et quam vehicula amet lacus, integer.
-                    </li>
-                    <li class="mb-1">Mi elit nibh erat facilisis. Volutpat eget malesuada mi in.</li>
-                    <li class="mb-1">Tincidunt iaculis eleifend arcu egestas. Sit gravida vestibulum quam scelerisque.
-                    </li>
-                    <li class="mb-1">Ornare elit, vel, ullamcorper nunc nulla pellentesque ut varius. Vitae tortor nulla
-                        a turpis erat fermentum, rhoncus.
-                    </li>
-                    <li>Gravida cursus nunc habitant aliquet lacus. Tempus, interdum nullam non quam ipsum ultricies
-                        ac.
-                    </li>
+                    <li class="mb-1">Fewer functions than more well-established libraries</li>
+                    <li class="mb-1">Less documentation and fewer tests than existing libraries</li>
+                    <li class="mb-1">Higher potential for bugs than in larger libraries</li>
                 </ul>
-                <h2 class="h4">Conclusion</h2>
-                <p class="mb-4 pb-2">Venenatis faucibus platea gravida amet sed sed urna volutpat. Aliquam neque, mi,
-                    justo odio semper. Egestas potentiquis neque nunc, rhoncus hendrerit. Viverra gravida pretium dolor
-                    eget placerat morbi proin eget. Vestibulum vitae ultrices vel sed sit quis. Ac quis diam at nulla
-                    libero. Turpis duis magna tellus condimentum.</p>
-                <p class="mb-4 pb-2">Velit parturient tellus tellus, congue pulvinar tellus viverra. In cum massa
-                    mattis ac. Amet vitae massa ut mi etiam. Auctor aliquam tristique felis donec eu sit nisi. Accumsan
-                    mauris eget convallis mattis sed etiam scelerisque.</p>
+            </div>
+
+            <!-- LibRapid Links -->
+            <div class="col-lg-3 position-relative">
+                <div class="sticky-top ms-xl-5 ms-lg-4 ps-xxl-4" style="top: 105px !important;">
+                    <h6>LibRapid Online</h6>
+                    <div class="mb-4 pb-lg-3">
+                        <a href="https://github.com/LibRapid/librapid"
+                           class="btn btn-icon btn-secondary btn-blue-green me-2 mb-2">
+                            <i class="bx bxl-github"></i>
+                        </a>
+                        <span>GitHub</span>
+                        <div></div>
+                        <a href="https://librapid.readthedocs.io/en/latest/"
+                           class="btn btn-icon btn-secondary btn-tart-orange me-2 mb-2">
+                            <i class="bx bxs-book-content"></i>
+                        </a>
+                        <span>Documentation</span>
+                        <div></div>
+                        <a href="https://github.com/LibRapid"
+                           class="btn btn-icon btn-secondary btn-slate-blue me-2 mb-2">
+                            <i class="bx bx-buildings"></i>
+                        </a>
+                        <span>GitHub Organisation</span>
+                        <div></div>
+                        <a href="https://pypi.org/project/librapid/"
+                           class="btn btn-icon btn-secondary btn-marigold me-2 mb-2">
+                            <i class="bx bxl-python"></i>
+                        </a>
+                        <span>LibRapid on PyPi</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 </main>
-
 
 <!-- Footer -->
 <footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
